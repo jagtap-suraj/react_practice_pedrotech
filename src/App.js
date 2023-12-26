@@ -1,33 +1,73 @@
-import "./App.css";
+import styles from "./App.module.css";
+import { User } from "./User";
 
 function App() {
   return (
-    <div className="App">
-      <User />
-      <Job salary={90000} position="Senior SDE" company="Amazon" />
-      <Job salary={12000} position="Junior SDE" company="Google" />
-      <Job salary={10000} position="Project Manager" company="Netflix" />
+    <div className={styles.App}>
+      <ConditionalRendering />
+      <List />
+      <ListOfObjects />
+      <Planents />
     </div>
   );
 }
 
-const User = () => {
+const ConditionalRendering = () => {
+  const age = 17;
+  const isGreen = true;
+
   return (
     <div>
-      <h1>Suraj</h1>
-      <h1>20</h1>
-      <h1>testSuraj@gmail.com</h1>
+      {age > 18 ? <h1>Overage</h1> : <h1>Underage</h1>}
+      <h1 style={{ color: isGreen ? "green" : "red" }}>This has Color</h1>
+      {isGreen && <button>This is a Button</button>}
     </div>
   );
 };
 
-// User Component
-const Job = (props) => {
+const List = () => {
+  const names = ["Suraj", "Yug", "Kunal", "Aditya", "Siddharth", "Maitreyi"];
+
   return (
     <div>
-      <h1>{props.salary}</h1>
-      <h1>{props.position}</h1>
-      <h1>{props.company}</h1>
+      {names.map((name, key) => {
+        return <h1 key={key}>{name}</h1>;
+      })}
+    </div>
+  );
+};
+
+const ListOfObjects = () => {
+  const users = [
+    { name: "Suraj", age: 20 },
+    { name: "Harsh", age: 19 },
+    { name: "Kunal", age: 21 },
+  ];
+
+  return (
+    <div>
+      {users.map((user, key) => {
+        return <User name={user.name} age={user.age} />;
+      })}
+    </div>
+  );
+};
+
+const Planents = () => {
+  const planets = [
+    { name: "Mars", isGasPlanet: false },
+    { name: "Earth", isGasPlanet: false },
+    { name: "Jupiter", isGasPlanet: true },
+    { name: "Venus", isGasPlanet: false },
+    { name: "Neptune", isGasPlanet: true },
+    { name: "Uranus", isGasPlanet: true },
+  ];
+
+  return (
+    <div>
+      {planets.map(
+        (planet, key) => planet.isGasPlanet && <h2>{planet.name}</h2>
+      )}
     </div>
   );
 };
