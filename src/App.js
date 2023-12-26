@@ -1,56 +1,25 @@
 import styles from "./App.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Text } from "./Text";
 
 function App() {
   return (
     <div className={styles.App}>
-      <ButtonUseStateExample />
-      <br />
-      <InputUseStateExample />
-      <br />
-      <ShowHideUseStateExample />
-      <br />
-      <CSSStateExample />
-      <br />
-      <CounterUseStateExample />
+      <ComponentLifecycleUseEffectExample />
     </div>
   );
 }
 
-const ButtonUseStateExample = () => {
-  const [age, setAge] = useState(0);
+const ComponentLifecycleUseEffectExample = () => {
+  const [showText, setShowText] = useState(false);
 
-  const increaseAge = () => {
-    setAge(age + 1);
-  };
+  useEffect(() => {
+    console.log("Component Mounted");
 
-  return (
-    <div>
-      {age}
-      <br />
-      <button onClick={increaseAge}>Increase Age</button>
-    </div>
-  );
-};
-
-const InputUseStateExample = () => {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  return (
-    <div>
-      <input type="text" onChange={handleInputChange}></input>
-      <br />
-      {inputValue}
-    </div>
-  );
-};
-
-const ShowHideUseStateExample = () => {
-  const [showText, setShowText] = useState(true);
+    return () => {
+      console.log("Component Unmounted");
+    };
+  }, []);
 
   return (
     <div>
@@ -59,38 +28,10 @@ const ShowHideUseStateExample = () => {
           setShowText(!showText);
         }}
       >
-        Show/Hide
+        Show Text
       </button>
-      {showText && <h2>Hi, My Name is Suraj</h2>}
-    </div>
-  );
-};
 
-const CSSStateExample = () => {
-  const [textColor, setTextColor] = useState("red");
-
-  const toggleColor = () => {
-    setTextColor(textColor === "green" ? "red" : "green");
-  };
-
-  return (
-    <div>
-      <button onClick={toggleColor}>change color</button>
-      <h2 style={{ color: textColor }}>Hi, My Name is Suraj</h2>
-    </div>
-  );
-};
-
-const CounterUseStateExample = () => {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div>
-      <button onClick={() => setCount(count + 1)}>Increase</button>
-      <button onClick={() => setCount(count - 1)}>Decrease</button>
-      <button onClick={() => setCount(0)}>Set to Zero</button>
-      <br />
-      {count}
+      {showText && <Text />}
     </div>
   );
 };
