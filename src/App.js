@@ -1,73 +1,96 @@
 import styles from "./App.module.css";
-import { User } from "./User";
+import { useState } from "react";
 
 function App() {
   return (
     <div className={styles.App}>
-      <ConditionalRendering />
-      <List />
-      <ListOfObjects />
-      <Planents />
+      <ButtonUseStateExample />
+      <br />
+      <InputUseStateExample />
+      <br />
+      <ShowHideUseStateExample />
+      <br />
+      <CSSStateExample />
+      <br />
+      <CounterUseStateExample />
     </div>
   );
 }
 
-const ConditionalRendering = () => {
-  const age = 17;
-  const isGreen = true;
+const ButtonUseStateExample = () => {
+  const [age, setAge] = useState(0);
+
+  const increaseAge = () => {
+    setAge(age + 1);
+  };
 
   return (
     <div>
-      {age > 18 ? <h1>Overage</h1> : <h1>Underage</h1>}
-      <h1 style={{ color: isGreen ? "green" : "red" }}>This has Color</h1>
-      {isGreen && <button>This is a Button</button>}
+      {age}
+      <br />
+      <button onClick={increaseAge}>Increase Age</button>
     </div>
   );
 };
 
-const List = () => {
-  const names = ["Suraj", "Yug", "Kunal", "Aditya", "Siddharth", "Maitreyi"];
+const InputUseStateExample = () => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
 
   return (
     <div>
-      {names.map((name, key) => {
-        return <h1 key={key}>{name}</h1>;
-      })}
+      <input type="text" onChange={handleInputChange}></input>
+      <br />
+      {inputValue}
     </div>
   );
 };
 
-const ListOfObjects = () => {
-  const users = [
-    { name: "Suraj", age: 20 },
-    { name: "Harsh", age: 19 },
-    { name: "Kunal", age: 21 },
-  ];
+const ShowHideUseStateExample = () => {
+  const [showText, setShowText] = useState(true);
 
   return (
     <div>
-      {users.map((user, key) => {
-        return <User name={user.name} age={user.age} />;
-      })}
+      <button
+        onClick={() => {
+          setShowText(!showText);
+        }}
+      >
+        Show/Hide
+      </button>
+      {showText && <h2>Hi, My Name is Suraj</h2>}
     </div>
   );
 };
 
-const Planents = () => {
-  const planets = [
-    { name: "Mars", isGasPlanet: false },
-    { name: "Earth", isGasPlanet: false },
-    { name: "Jupiter", isGasPlanet: true },
-    { name: "Venus", isGasPlanet: false },
-    { name: "Neptune", isGasPlanet: true },
-    { name: "Uranus", isGasPlanet: true },
-  ];
+const CSSStateExample = () => {
+  const [textColor, setTextColor] = useState("red");
+
+  const toggleColor = () => {
+    setTextColor(textColor === "green" ? "red" : "green");
+  };
 
   return (
     <div>
-      {planets.map(
-        (planet, key) => planet.isGasPlanet && <h2>{planet.name}</h2>
-      )}
+      <button onClick={toggleColor}>change color</button>
+      <h2 style={{ color: textColor }}>Hi, My Name is Suraj</h2>
+    </div>
+  );
+};
+
+const CounterUseStateExample = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+      <button onClick={() => setCount(count - 1)}>Decrease</button>
+      <button onClick={() => setCount(0)}>Set to Zero</button>
+      <br />
+      {count}
     </div>
   );
 };
